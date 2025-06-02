@@ -38,9 +38,10 @@ body {
   position: relative;
 }
 
-/* Remove light mode styles since we're defaulting to dark */
-.dark body {
-  background: linear-gradient(-45deg, #1a1c2e, #2d1b69, #1e3a8a, #312e81);
+/* Light mode styles */
+:root:not(.dark) body {
+  @apply text-slate-800;
+  background: linear-gradient(-45deg, #e0e7ff, #c7d2fe, #a5b4fc, #818cf8);
   background-size: 200% 200%;
   animation: gradient 12s ease infinite;
 }
@@ -49,6 +50,10 @@ body {
   @apply rounded-lg border border-slate-700 bg-slate-800/80 backdrop-blur-sm shadow-sm p-6;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   backdrop-filter: blur(8px);
+}
+
+:root:not(.dark) .card {
+  @apply border-slate-200 bg-white/90;
 }
 
 .card:hover {
@@ -87,13 +92,17 @@ body {
   backdrop-filter: blur(4px);
 }
 
+:root:not(.dark) .btn-outline {
+  @apply border-slate-300 bg-white/50 hover:bg-slate-100/80 text-slate-700;
+}
+
 .btn-outline:hover {
   transform: translateY(-2px);
 }
 
 /* Smooth transitions for dark mode */
 * {
-  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 /* Ensure proper stacking context */
@@ -101,4 +110,22 @@ body {
   position: relative;
   min-height: 100vh;
   z-index: 1;
+}
+
+/* Input and textarea styles */
+input, textarea {
+  @apply bg-slate-800/50 border border-slate-600 text-slate-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+:root:not(.dark) input, :root:not(.dark) textarea {
+  @apply bg-white/50 border-slate-300 text-slate-800;
+}
+
+/* Code block styles */
+pre, code {
+  @apply bg-slate-800/80 text-slate-200 rounded-md;
+}
+
+:root:not(.dark) pre, :root:not(.dark) code {
+  @apply bg-slate-100 text-slate-800;
 } 

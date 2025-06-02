@@ -126,30 +126,30 @@ const DSAOptimizer: React.FC = () => {
         </p>
       </div>
       
-      <PasteBox
-        onSubmit={handleSubmit}
-        placeholder="Paste your algorithm or data structure code here..."
-        buttonText="Analyze Algorithm"
-        isLoading={isLoading}
-        minRows={10}
-      />
+      <div className="grid grid-cols-1 gap-8">
+        <div className="card">
+          <PasteBox
+            onSubmit={handleSubmit}
+            placeholder="Paste your algorithm or data structure code here..."
+            buttonText="Analyze Algorithm"
+            isLoading={isLoading}
+            minRows={10}
+          />
+        </div>
 
-      {result && (
-        <div className="mt-8 space-y-6">
-          <div className="bg-white dark:bg-slate-800 rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">Analysis Results</h2>
-            
-            <div className="space-y-4">
+        {result && (
+          <div className="card">
+            <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-2">Complexity Analysis</h3>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Complexity Analysis</h3>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-50 dark:bg-slate-700 p-4 rounded-lg">
+                  <div className="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-lg">
                     <p className="text-sm text-slate-600 dark:text-slate-300">Time Complexity</p>
                     <p className="text-lg font-medium text-slate-900 dark:text-white">
                       {result.complexity?.time || 'O(n)'}
                     </p>
                   </div>
-                  <div className="bg-slate-50 dark:bg-slate-700 p-4 rounded-lg">
+                  <div className="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-lg">
                     <p className="text-sm text-slate-600 dark:text-slate-300">Space Complexity</p>
                     <p className="text-lg font-medium text-slate-900 dark:text-white">
                       {result.complexity?.space || 'O(1)'}
@@ -159,39 +159,45 @@ const DSAOptimizer: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-2">Analysis</h3>
-                <p className="text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
-                  {result.analysis}
-                </p>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Analysis</h3>
+                <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4">
+                  <p className="text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
+                    {result.analysis}
+                  </p>
+                </div>
               </div>
 
               {result.suggestions && result.suggestions.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-2">Optimization Suggestions</h3>
-                  <ul className="list-disc list-inside space-y-2">
-                    {result.suggestions.map((suggestion: string, index: number) => (
-                      <li key={index} className="text-slate-600 dark:text-slate-300">
-                        {suggestion}
-                      </li>
-                    ))}
-                  </ul>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Optimization Suggestions</h3>
+                  <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4">
+                    <ul className="list-disc list-inside space-y-2">
+                      {result.suggestions.map((suggestion: string, index: number) => (
+                        <li key={index} className="text-slate-600 dark:text-slate-300">
+                          {suggestion}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               )}
 
               {result.code && (
                 <div>
-                  <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-2">Optimized Code</h3>
-                  <pre className="bg-slate-50 dark:bg-slate-700 p-4 rounded-lg overflow-x-auto">
-                    <code className="text-sm text-slate-900 dark:text-slate-100">
-                      {result.code}
-                    </code>
-                  </pre>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Optimized Code</h3>
+                  <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4">
+                    <pre className="overflow-x-auto">
+                      <code className="text-sm text-slate-900 dark:text-slate-100">
+                        {result.code}
+                      </code>
+                    </pre>
+                  </div>
                 </div>
               )}
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }
