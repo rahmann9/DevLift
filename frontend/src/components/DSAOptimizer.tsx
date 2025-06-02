@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { Layout } from './Layout'
-import { CodeEditor } from './CodeEditor'
-import { motion } from 'framer-motion'
+import PasteBox from './PasteBox'
 import { analyzeWithAI } from '../services/ai'
 import { useAuth } from '../services/auth'
 
@@ -97,107 +95,110 @@ const analyzeAlgorithm = (code: string) => {
 };
 
 const DSAOptimizer: React.FC = () => {
-  const [code, setCode] = useState('')
-  const [optimizedCode, setOptimizedCode] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [result, setResult] = useState<any>(null)
   const { user } = useAuth()
   
-  const handleOptimize = async () => {
+  const handleSubmit = async (code: string) => {
     setIsLoading(true)
     try {
-      const analysis = await analyzeWithAI('dsa', code, 'unknown')
+      const language = detectLanguage(code)
+      const analysis = await analyzeWithAI('dsa', code, language)
       setResult(analysis)
-      setOptimizedCode(analysis.code)
     } catch (error) {
       console.error('Error analyzing algorithm:', error)
     } finally {
       setIsLoading(false)
     }
   }
-
+  
   return (
-    <Layout
-      title="DSA Optimizer"
-      description="Optimize algorithms and data structures"
-    >
-      <div className="space-y-6">
-        <div>
-          <h2 className="text-xl font-semibold text-white mb-4">Input Code</h2>
-          <CodeEditor
-            value={code}
-            onChange={setCode}
+    <div className="max-w-4xl mx-auto">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">DSA Optimizer</h1>
+        <p className="text-slate-600 dark:text-slate-300">
+          Get AI-powered analysis and optimization suggestions for your algorithms and data structures.
+          {!user?.hasOpenAIKey && (
+            <span className="ml-2 text-yellow-600 dark:text-yellow-400">
+              (Using basic analysis - Sign in with OpenAI key for enhanced analysis)
+            </span>
+          )}
+        </p>
+      </div>
+      
+      <div className="grid grid-cols-1 gap-8">
+        <div className="card">
+          <PasteBox
+            onSubmit={handleSubmit}
             placeholder="Paste your algorithm or data structure code here..."
+            buttonText="Analyze Algorithm"
+            isLoading={isLoading}
             minRows={10}
           />
         </div>
 
-        <div className="flex justify-end">
-          <button
-            onClick={handleOptimize}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-          >
-            Optimize
-          </button>
-        </div>
-
         {result && (
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Complexity Analysis</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                <p className="text-sm text-slate-400">Time Complexity</p>
-                <p className="text-lg font-medium text-white">
-                  {result.complexity?.time || 'O(n)'}
-                </p>
-              </div>
-              <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                <p className="text-sm text-slate-400">Space Complexity</p>
-                <p className="text-lg font-medium text-white">
-                  {result.complexity?.space || 'O(1)'}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-4">
-              <h3 className="text-lg font-semibold text-white mb-2">Analysis</h3>
-              <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                <p className="text-slate-300">{result.analysis}</p>
-              </div>
-            </div>
-
-            {result.suggestions && result.suggestions.length > 0 && (
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold text-white mb-2">Optimization Suggestions</h3>
-                <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                  <ul className="list-disc list-inside space-y-2">
-                    {result.suggestions.map((suggestion: string, index: number) => (
-                      <li key={index} className="text-slate-300">
-                        {suggestion}
-                      </li>
-                    ))}
-                  </ul>
+          <div className="card">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Complexity Analysis</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-lg">
+                    <p className="text-sm text-slate-600 dark:text-slate-300">Time Complexity</p>
+                    <p className="text-lg font-medium text-slate-900 dark:text-white">
+                      {result.complexity?.time || 'O(n)'}
+                    </p>
+                  </div>
+                  <div className="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-lg">
+                    <p className="text-sm text-slate-600 dark:text-slate-300">Space Complexity</p>
+                    <p className="text-lg font-medium text-slate-900 dark:text-white">
+                      {result.complexity?.space || 'O(1)'}
+                    </p>
+                  </div>
                 </div>
               </div>
-            )}
 
-            {optimizedCode && (
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold text-white mb-2">Optimized Code</h3>
-                <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                  <CodeEditor
-                    value={optimizedCode}
-                    onChange={setOptimizedCode}
-                    placeholder="Optimized code will appear here..."
-                    minRows={10}
-                  />
+              <div>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Analysis</h3>
+                <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4">
+                  <p className="text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
+                    {result.analysis}
+                  </p>
                 </div>
               </div>
-            )}
+
+              {result.suggestions && result.suggestions.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Optimization Suggestions</h3>
+                  <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4">
+                    <ul className="list-disc list-inside space-y-2">
+                      {result.suggestions.map((suggestion: string, index: number) => (
+                        <li key={index} className="text-slate-600 dark:text-slate-300">
+                          {suggestion}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {result.code && (
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">Optimized Code</h3>
+                  <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4">
+                    <pre className="overflow-x-auto">
+                      <code className="text-sm text-slate-900 dark:text-slate-100">
+                        {result.code}
+                      </code>
+                    </pre>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
-    </Layout>
+    </div>
   )
 }
 
