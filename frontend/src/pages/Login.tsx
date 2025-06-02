@@ -23,8 +23,8 @@ const Login: React.FC = () => {
       // Listen for the OAuth response
       window.addEventListener('message', async (event) => {
         if (event.data.type === 'GOOGLE_OAUTH_SUCCESS') {
-          const user = await loginWithGoogle()
-          login(user)
+          const { user, token } = await loginWithGoogle()
+          login(user, token)
           navigate('/')
           popup?.close()
         }
@@ -53,8 +53,8 @@ const Login: React.FC = () => {
       // Listen for the OAuth response
       window.addEventListener('message', async (event) => {
         if (event.data.type === 'LINKEDIN_OAUTH_SUCCESS') {
-          const user = await loginWithLinkedIn()
-          login(user)
+          const { user, token } = await loginWithLinkedIn()
+          login(user, token)
           navigate('/')
           popup?.close()
         }
@@ -69,8 +69,8 @@ const Login: React.FC = () => {
   const handleGuestLogin = async () => {
     try {
       setLoading(true)
-      const user = await loginAsGuest()
-      login(user)
+      const { user, token } = await loginAsGuest()
+      login(user, token)
       navigate('/')
     } catch (error) {
       setError('Failed to login as guest')
