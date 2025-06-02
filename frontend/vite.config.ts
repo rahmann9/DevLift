@@ -27,7 +27,7 @@ export default defineConfig({
       'X-XSS-Protection': '1; mode=block'
     },
     cors: {
-      origin: ['http://localhost:3000', 'https://devlift.vercel.app'],
+      origin: ['http://localhost:5173', 'https://devlift.vercel.app'],
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
       credentials: true
