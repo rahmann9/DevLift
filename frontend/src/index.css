@@ -12,27 +12,89 @@
   --success: #10b981;
 }
 
+/* Subtle background animation */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   @apply text-slate-800 dark:text-slate-200;
+  background: linear-gradient(-45deg, #f3f4f6, #e5e7eb, #d1d5db, #9ca3af);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  min-height: 100vh;
+  position: relative;
+}
+
+.dark body {
+  background: linear-gradient(-45deg, #1f2937, #111827, #374151, #4b5563);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
 }
 
 .card {
-  @apply rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm p-6;
+  @apply rounded-lg border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow-sm p-6;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  backdrop-filter: blur(8px);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .btn {
-  @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  backdrop-filter: blur(4px);
 }
 
 .btn-primary {
-  @apply bg-blue-600 text-white hover:bg-blue-700 h-10 py-2 px-4;
+  @apply bg-blue-600/90 text-white hover:bg-blue-700 h-10 py-2 px-4;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
 
 .btn-secondary {
-  @apply bg-emerald-600 text-white hover:bg-emerald-700 h-10 py-2 px-4;
+  @apply bg-emerald-600/90 text-white hover:bg-emerald-700 h-10 py-2 px-4;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
 }
 
 .btn-outline {
-  @apply border border-slate-300 dark:border-slate-700 bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 h-10 py-2 px-4;
+  @apply border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 h-10 py-2 px-4;
+  transition: all 0.2s ease-in-out;
+  backdrop-filter: blur(4px);
+}
+
+.btn-outline:hover {
+  transform: translateY(-1px);
+}
+
+/* Smooth transitions for dark mode */
+* {
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+/* Ensure proper stacking context */
+#root {
+  position: relative;
+  min-height: 100vh;
+  z-index: 1;
 } 
