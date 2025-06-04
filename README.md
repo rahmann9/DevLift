@@ -190,6 +190,7 @@ Once the backend server is running, you can access the API documentation at:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+## Deployment
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+- Frontend: VercelAdd commentMore actions
+- Backend: Fly.io or Render 
