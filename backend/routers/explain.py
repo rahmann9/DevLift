@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional, List
-from ..services.ai_service import ai_service
-from ..prompt_builder import build_stacktrace_prompt
+from services.ai_service import ai_service
+from prompt_builder import build_stacktrace_prompt
 
 router = APIRouter(prefix="/explain", tags=["StackTraceGPT"])
 

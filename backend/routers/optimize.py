@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional
-from ..services.ai_service import ai_service
-from ..prompt_builder import build_optimizer_prompt
+from services.ai_service import ai_service
+from prompt_builder import build_optimizer_prompt
 
 router = APIRouter(prefix="/optimize", tags=["DSA Optimizer"])
 

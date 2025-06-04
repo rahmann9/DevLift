@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional
-from ..services.openai_service import get_openai_client
-from ..prompt_builder import build_refactor_prompt
+from services.openai_service import get_openai_client
+from prompt_builder import build_refactor_prompt
 
 router = APIRouter(prefix="/refactor", tags=["RefactorTool"])
 

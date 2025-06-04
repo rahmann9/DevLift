@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import explain, refactor, optimize
+from fastapi.responses import RedirectResponse
+from routers import explain, refactor, optimize
 
 app = FastAPI(
     title="DevLift API",
@@ -21,6 +22,10 @@ app.add_middleware(
 app.include_router(explain.router)
 app.include_router(refactor.router)
 app.include_router(optimize.router)
+
+@app.get("/")
+async def root():
+    return RedirectResponse(url="/docs")
 
 @app.get("/health")
 async def health_check():
