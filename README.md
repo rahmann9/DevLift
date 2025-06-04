@@ -14,20 +14,54 @@ DevLift is an AI-powered development tool that helps developers debug, refactor,
 - FastAPI (Python web framework)
 - OpenAI API for AI-powered features
 - Python 3.12+
+- Docker
 
 ### Frontend
 - React
 - TypeScript
 - Vite
+- Docker
+- Nginx
 
 ## Getting Started
 
 ### Prerequisites
 - Python 3.12 or higher
 - Node.js 16 or higher
+- Docker and Docker Compose
 - OpenAI API key
 
-### Backend Setup
+### Development Setup
+
+#### Using Docker (Recommended)
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/devlift.git
+cd devlift
+```
+
+2. Create a `.env` file in the backend directory:
+```
+PORT=8000
+HOST=0.0.0.0
+FRONTEND_URL=http://localhost:5173
+OPENAI_API_KEY=your_api_key_here
+```
+
+3. Start the application using Docker Compose:
+```bash
+docker-compose up --build
+```
+
+The application will be available at:
+- Frontend: http://localhost
+- Backend API: http://localhost:8000
+- API Documentation: http://localhost:8000/docs
+
+#### Manual Setup
+
+##### Backend Setup
 
 1. Navigate to the backend directory:
 ```bash
@@ -66,9 +100,7 @@ OPENAI_API_KEY=your_api_key_here
 uvicorn main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-The API will be available at http://localhost:8000
-
-### Frontend Setup
+##### Frontend Setup
 
 1. Navigate to the frontend directory:
 ```bash
@@ -85,7 +117,52 @@ npm install
 npm run dev
 ```
 
-The frontend will be available at http://localhost:5173
+## Deployment
+
+### Backend Deployment (Render)
+
+1. Push your code to GitHub
+
+2. Go to [Render](https://render.com) and sign in with your GitHub account
+
+3. Click "New +" and select "Web Service"
+
+4. Connect your GitHub repository
+
+5. Configure the service:
+   - Name: `devlift-api`
+   - Environment: `Docker`
+   - Dockerfile Path: `./backend/Dockerfile`
+   - Root Directory: `backend`
+
+6. Add environment variables:
+   - `PORT`: `8000`
+   - `FRONTEND_URL`: `https://devlift.vercel.app`
+   - `OPENAI_API_KEY`: Your OpenAI API key
+
+7. Click "Create Web Service"
+
+### Frontend Deployment (Vercel)
+
+1. Push your code to GitHub
+
+2. Go to [Vercel](https://vercel.com) and sign in with your GitHub account
+
+3. Click "New Project" and import your repository
+
+4. Configure the project:
+   - Framework Preset: Docker
+   - Root Directory: `frontend`
+   - Dockerfile Path: `./Dockerfile`
+
+5. Add environment variables if needed
+
+6. Click "Deploy"
+
+After deployment:
+- Frontend: https://devlift.vercel.app
+- Backend API: https://devlift-api.onrender.com
+- API Documentation: https://devlift-api.onrender.com/docs
 
 ## API Documentation
 
