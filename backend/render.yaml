@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: devlift-api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: FRONTEND_URL
+        value: https://devlift.vercel.app
+      - key: OPENAI_API_KEY
+        sync: false 
