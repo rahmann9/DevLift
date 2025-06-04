@@ -192,5 +192,5 @@ Once the backend server is running, you can access the API documentation at:
 
 ## Deployment
 
-- Frontend: VercelAdd commentMore actions
+- Frontend: Vercel
 - Backend: Fly.io or Render 
