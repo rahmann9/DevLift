@@ -1,93 +1,118 @@
-# DevLift - Developer Guide
+# DevLift
 
-DevLift is a 3-in-1 AI-powered developer tool that helps with debugging, legacy code modernization, and DSA learning.
+DevLift is an AI-powered development tool that helps developers debug, refactor, and optimize their code. It provides intelligent assistance for stack trace analysis, code modernization, and algorithm optimization.
 
 ## Features
 
-- **StackTraceGPT**: Explains stack traces and suggests fixes
-- **RefactorTool**: Modernizes legacy code (e.g., Java 8 → Java 21)
-- **DSA Optimizer**: Explains and improves inefficient algorithms
+- **Stack Trace Analysis**: Get detailed explanations of stack traces and suggested fixes
+- **Code Modernization**: Modernize legacy code to use newer language features and conventions
+- **Algorithm Optimization**: Optimize algorithms for better time and space complexity
 
-## Project Structure
+## Tech Stack
 
-```
-devlift/
-├── frontend/               # React + Vite + Tailwind CSS
-│   ├── src/
-│   │   ├── components/     # UI components
-│   │   ├── api/            # API client code
-│   │   └── ...
-│   └── ...
-├── backend/                # Python + FastAPI
-│   ├── routers/            # API route handlers
-│   ├── services/           # Business logic
-│   ├── main.py             # Entry point
-│   └── prompt_builder.py   # LLM prompt construction
-└── README.dev.md           # Developer documentation
-```
+### Backend
+- FastAPI (Python web framework)
+- OpenAI API for AI-powered features
+- Python 3.12+
 
-## Development Setup
+### Frontend
+- React
+- TypeScript
+- Vite
+
+## Getting Started
+
+### Prerequisites
+- Python 3.12 or higher
+- Node.js 16 or higher
+- OpenAI API key
 
 ### Backend Setup
 
 1. Navigate to the backend directory:
-   ```
-   cd devlift/backend
-   ```
+```bash
+cd backend
+```
 
 2. Create a virtual environment:
-   ```
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+```bash
+py -3.12 -m venv .venv
+```
 
-3. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
+3. Activate the virtual environment:
+```bash
+# Windows
+.venv\Scripts\activate
 
-4. Create a `.env` file based on `env.example` and add your OpenAI API key.
+# Unix/MacOS
+source .venv/bin/activate
+```
 
-5. Run the development server:
-   ```
-   uvicorn main:app --reload
-   ```
+4. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-The API will be available at http://localhost:8000.
+5. Create a `.env` file in the backend directory with the following content:
+```
+PORT=8000
+HOST=0.0.0.0
+FRONTEND_URL=http://localhost:5173
+OPENAI_API_KEY=your_api_key_here
+```
+
+6. Start the backend server:
+```bash
+uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+The API will be available at http://localhost:8000
 
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
-   ```
-   cd devlift/frontend
-   ```
+```bash
+cd frontend
+```
 
 2. Install dependencies:
-   ```
-   npm install
-   ```
+```bash
+npm install
+```
 
-3. Run the development server:
-   ```
-   npm run dev
-   ```
+3. Start the development server:
+```bash
+npm run dev
+```
 
-The frontend will be available at http://localhost:5173.
+The frontend will be available at http://localhost:5173
 
-## API Endpoints
+## API Documentation
 
-- `POST /explain/stacktrace` - Analyze and explain stack traces
-- `POST /refactor/modernize` - Modernize legacy code
-- `POST /optimize/dsa` - Optimize algorithms
+Once the backend server is running, you can access the API documentation at:
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+### Available Endpoints
+
+#### Stack Trace Analysis
+- `POST /explain/stacktrace`: Analyze a stack trace and provide explanations
+- `GET /explain/providers`: Get list of available AI providers
+
+#### Code Modernization
+- `POST /refactor/modernize`: Modernize legacy code
+
+#### Algorithm Optimization
+- `POST /optimize/dsa`: Optimize algorithms for better performance
 
 ## Contributing
 
-1. Create a feature branch from `main`
-2. Make your changes
-3. Ensure all tests pass
-4. Submit a pull request
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Deployment
+## License
 
-- Frontend: Vercel
-- Backend: Fly.io or Render 
+This project is licensed under the MIT License - see the LICENSE file for details. 
