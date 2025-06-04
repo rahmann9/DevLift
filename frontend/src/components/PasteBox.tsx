@@ -39,19 +39,57 @@ const PasteBox: React.FC<PasteBoxProps> = ({
     }
   }
 
+  const handleCopy = () => {
+    if (text) {
+      navigator.clipboard.writeText(text)
+    }
+  }
+
+  const handleDownload = () => {
+    if (text) {
+      const blob = new Blob([text], { type: 'text/plain' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'code.txt'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    }
+  }
+
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <div className="flex justify-between items-center mb-2">
         <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-          {language ? `${language} Input` : 'Input'}
+          Text Input
         </label>
-        <button
-          type="button"
-          onClick={handleClear}
-          className="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
-        >
-          Clear
-        </button>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={handleCopy}
+            disabled={!text}
+            className="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 disabled:opacity-50"
+          >
+            Copy
+          </button>
+          <button
+            type="button"
+            onClick={handleDownload}
+            disabled={!text}
+            className="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 disabled:opacity-50"
+          >
+            Download
+          </button>
+          <button
+            type="button"
+            onClick={handleClear}
+            className="text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300"
+          >
+            Clear
+          </button>
+        </div>
       </div>
       
       <textarea
